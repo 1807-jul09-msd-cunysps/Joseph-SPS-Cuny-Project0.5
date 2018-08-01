@@ -1,6 +1,0 @@
-C:\Users\squir\source\repos\ConsoleApp2\PalindromeLibrary\bin\Debug\PalindromeLibrary.dll
-C:\Users\squir\source\repos\ConsoleApp2\PalindromeLibrary\bin\Debug\PalindromeLibrary.pdb
-C:\Users\squir\source\repos\ConsoleApp2\PalindromeLibrary\obj\Debug\PalindromeLibrary.csprojAssemblyReference.cache
-C:\Users\squir\source\repos\ConsoleApp2\PalindromeLibrary\obj\Debug\PalindromeLibrary.csproj.CoreCompileInputs.cache
-C:\Users\squir\source\repos\ConsoleApp2\PalindromeLibrary\obj\Debug\PalindromeLibrary.dll
-C:\Users\squir\source\repos\ConsoleApp2\PalindromeLibrary\obj\Debug\PalindromeLibrary.pdb
