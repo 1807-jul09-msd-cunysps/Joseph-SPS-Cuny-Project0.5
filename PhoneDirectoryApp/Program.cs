@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using PhoneLibrary;
+
 using System.Data.SqlClient;
 
 
@@ -16,12 +17,7 @@ namespace PhoneDirectoryApp
     {
         static void Main(string[] args)
         {
-            
-            #region StartApp
-            PersonDirectory pDirectory = new PersonDirectory();
-            pDirectory.Start();
-            #endregion
-
+            UserInterface ui = new UserInterface();
 
         }//end main
 

@@ -1,1 +1,14 @@
-﻿2018-07-31 20:17:35.8699 ERROR Cannot open server 'rev-cuny-joe-server' requested by the login. Client with IP address '100.12.45.222' is not allowed to access the server.  To enable access, use the Windows Azure Management Portal or run sp_set_firewall_rule on the master database to create a firewall rule for this IP address or address range.  It may take up to five minutes for this change to take effect.
+﻿2018-08-01 21:38:17.1339 ERROR Cannot open server 'rev-cuny-joe-server' requested by the login. Client with IP address '100.12.45.222' is not allowed to access the server.  To enable access, use the Windows Azure Management Portal or run sp_set_firewall_rule on the master database to create a firewall rule for this IP address or address range.  It may take up to five minutes for this change to take effect.
+2018-08-01 22:25:47.8427 ERROR Incorrect syntax near the keyword 'as'.
+2018-08-01 22:32:31.9088 ERROR Incorrect syntax near the keyword 'as'.
+2018-08-01 22:39:26.7102 ERROR Incorrect syntax near the keyword 'as'.
+2018-08-01 23:03:36.8293 ERROR The multi-part identifier "p.Addr_ID" could not be bound.
+Invalid column name 'Address_IDINNER'.
+The multi-part identifier "p.Ph_ID" could not be bound.
+2018-08-01 23:09:24.8827 ERROR Invalid column name 'Address_IDINNER'.
+2018-08-01 23:18:54.2659 ERROR Unable to cast object of type 'System.Int32' to type 'System.String'.
+2018-08-01 23:19:51.7234 ERROR Unable to cast object of type 'System.Int32' to type 'System.String'. System.Data
+2018-08-01 23:21:30.9840 ERROR Unable to cast object of type 'System.Int32' to type 'System.String'.    at System.Data.SqlClient.SqlBuffer.get_String()
+   at System.Data.SqlClient.SqlDataReader.GetString(Int32 i)
+   at PhoneLibrary.Operations.Read() in D:\squir\Revature_repo\PhoneDirectoryApp\PhoneLibrary\PersonDirectory.cs:line 50
+2018-08-01 23:25:03.9453 ERROR Object reference not set to an instance of an object.    at PhoneLibrary.Operations.Read() in D:\squir\Revature_repo\PhoneDirectoryApp\PhoneLibrary\PersonDirectory.cs:line 62
