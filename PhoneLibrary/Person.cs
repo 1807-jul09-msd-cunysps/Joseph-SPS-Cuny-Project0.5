@@ -24,6 +24,7 @@ namespace PhoneLibrary
         public Person()
         {
             address = new Address();
+            address2 = new Address();
             phone = new Phone();
         }
 
@@ -37,10 +38,18 @@ namespace PhoneLibrary
         public string LastName { get; set; }
 
         [DataMember]
+        public string Gender { get; set; }
+
+        [DataMember]
         public Address address { get; set; }
 
         [DataMember]
+        public Address address2 { get; set; }
+
+        [DataMember]
         public Phone phone     { get; set; }
+
+        
     }
 
     public class Address
@@ -49,8 +58,8 @@ namespace PhoneLibrary
         public string houseNum { get; set; }
         public string street   { get; set; }
         public string city     { get; set; }
-        public State State     { get; set; }
-        public Country Country { get; set; }
+        public string State     { get; set; }
+        public string Country { get; set; }
         public string zipcode  { get; set; }
     }
 
@@ -66,6 +75,18 @@ namespace PhoneLibrary
         {
             return areaCode + number;
         }
+    }
+
+    public class Email
+    {
+        public Email()
+        {
+
+        }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string email { get; set; }
+        public string Message { get; set; }
     }
 
 

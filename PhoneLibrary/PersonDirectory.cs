@@ -33,8 +33,9 @@ namespace PhoneLibrary
                 con = new SqlConnection(conStr);
                 con.Open();
                 string getAllPeople = "SELECT * FROM Person " +
-                                      "INNER JOIN P_Address on Addr_ID = Address_ID " +
+                                      "INNER JOIN PAddress on Person_ID = PerID " +
                                       "INNER JOIN Phone on Ph_ID = Phone_ID";
+
                 SqlCommand myCommand = new SqlCommand(getAllPeople, con);
                 dr = myCommand.ExecuteReader();
                 while (dr.Read())
@@ -44,21 +45,23 @@ namespace PhoneLibrary
                     p.Pid = Convert.ToInt64(dr["Person_ID"]);
                     p.FirstName = dr["FirstName"].ToString();
                     p.LastName = dr["LastName"].ToString();
-                    p.address.Aid = Convert.ToInt64(dr.GetValue(3));
+                    p.Gender = dr.GetString(3);
                     p.phone.PID = Convert.ToInt64(dr.GetValue(4));
-                    
-                    p.address.houseNum = dr.GetString(6);
-                    p.address.street = dr.GetString(7);
-                    p.address.city = dr.GetString(8);
-                    p.address.State = (State)Enum.Parse(typeof(State), dr.GetString(9));
-                    p.address.Country = (Country)Enum.Parse(typeof(Country), dr.GetString(10));
-                    p.address.zipcode = dr.GetString(11);
 
-                    p.phone.countryCode = dr.GetString(13);
-                    p.phone.areaCode = dr.GetString(14);
-                    p.phone.number = dr.GetString(14);
-                    p.phone.ext = dr.GetString(16);
+                    p.address.Aid = Convert.ToInt64(dr.GetValue(5));
+                    p.address.houseNum = dr.GetString(7);
+                    p.address.street = dr.GetString(8);
+                    p.address.city = dr.GetString(9);
+                    p.address.State = dr.GetString(10);
+                    p.address.Country = dr.GetString(11);
+                    p.address.zipcode = dr.GetString(12);
 
+                    p.phone.countryCode = dr.GetString(14);
+                    p.phone.areaCode = dr.GetString(15);
+                    p.phone.number = dr.GetString(16);
+                    p.phone.ext = dr.GetString(17);
+
+                    count = (int)p.Pid;
                     result.Add(p);
                     p = null;
                 }
@@ -68,23 +71,27 @@ namespace PhoneLibrary
             catch (Exception e) { logger.Error(e.Message +" "+ e.StackTrace); }
             finally { con.Close(); }
 
-
-
             return result;
-
-
         }//end read
 
         //calls the methods to add inside and outside  the collection
         public void Add(Person p)
         {
-            Random random = new Random();
-            count++;
-            p.Pid = count + random.Next(1, 100);
-            p.address.Aid = count + 1;
-            p.phone.PID = count + 2;
-            Library.Add(p);
-            AppendOutside(p);
+            try
+            {
+                Random random = new Random();
+                count++;
+                p.Pid = count + random.Next(1, 100);
+                p.address.Aid = random.Next(1, 200);
+                p.phone.PID = p.Pid + 2;
+                if(p.address2.houseNum != null)
+                {
+                    p.address2.Aid = random.Next(1, 200); 
+                }
+                Library.Add(p);
+                AppendOutside(p);
+            }
+            catch (Exception e) { Console.WriteLine(e.Message); }
         }
 
         //calls the methods to delete inside and outsie the collection
@@ -117,6 +124,7 @@ namespace PhoneLibrary
                 case "name":
                     p.FirstName = update.FirstName;
                     p.LastName = update.LastName;
+                    p.Gender = update.Gender;
                     UpdateOutside(p, "name");
                     break;
 
@@ -271,45 +279,56 @@ namespace PhoneLibrary
         //Start the app by reading in data from SQL Server DB
         public void SQLStart()
         {
+            List<Person> result = new List<Person>();
             SqlConnection con = null;
+            SqlDataReader dr;
             string conStr = "Data Source=rev-cuny-joe-server.database.windows.net;Initial Catalog=PhoneDirectory;Persist Security Info=True;User ID=jrusso;Password=Nazarick1993";
             var logger = NLog.LogManager.GetCurrentClassLogger();
             try
             {
                 con = new SqlConnection(conStr);
                 con.Open();
-                string getAllPeople = "SELECT * FROM Person";
+                string getAllPeople = "SELECT * FROM Person " +
+                                      "INNER JOIN PAddress on Person_ID = PerID " +
+                                      "INNER JOIN Phone on Ph_ID = Phone_ID";
+                #region GetNamesFromDB
                 SqlCommand myCommand = new SqlCommand(getAllPeople, con);
-                var allPeople = myCommand.ExecuteReader();
-
-                #region GetNamesfromDB
-                using (allPeople)
+                dr = myCommand.ExecuteReader();
+                while (dr.Read())
                 {
-                    while (allPeople.Read())
-                    {
-                        Person p1 = new Person();
-                        p1.Pid = Convert.ToInt64(allPeople.GetValue(0));
-                        p1.FirstName = allPeople.GetString(1);
-                        p1.LastName = allPeople.GetString(2); ;
-                        p1.address.Aid = Convert.ToInt64(allPeople.GetValue(3));
-                        p1.phone.PID = Convert.ToInt64(allPeople.GetValue(4));
-                        count=(int)p1.Pid;
-                        Library.Add(p1);
-                    }
+
+                    Person p = new Person();
+                    p.Pid = Convert.ToInt64(dr["Person_ID"]);
+                    p.FirstName = dr["FirstName"].ToString();
+                    p.LastName = dr["LastName"].ToString();
+                    p.Gender = dr.GetString(3);
+                    p.phone.PID = Convert.ToInt64(dr.GetValue(4));
+
+                    p.address.Aid = Convert.ToInt64(dr.GetValue(5));
+                    p.address.houseNum = dr.GetString(7);
+                    p.address.street = dr.GetString(8);
+                    p.address.city = dr.GetString(9);
+                    p.address.State = dr.GetString(10);
+                    p.address.Country = dr.GetString(11);
+                    p.address.zipcode = dr.GetString(12);
+
+                    p.phone.countryCode = dr.GetString(14);
+                    p.phone.areaCode = dr.GetString(15);
+                    p.phone.number = dr.GetString(16);
+                    p.phone.ext = dr.GetString(17);
+
+
+                    count = (int)p.Pid;
+                    Library.Add(p);
+                    
                 }
                 #endregion
-
-                foreach (Person p2 in Library)
-                {
-                    SqlgetAddressandPhone(p2, con);
-                }
-
+                   
             }
-
-            catch (SqlException ex) { logger.Error(ex.Message); }
-            catch (Exception e) { logger.Error(e.Message); }
+            catch (SqlException ex) { logger.Error(ex.Message + "" + ex.Procedure); }
+            catch (Exception e) { logger.Error(e.Message + " " + e.StackTrace); }
             finally { con.Close(); }
-
+               
         }//end sql
 
         //Get The Address and Phone part of a Person from the DB
@@ -341,8 +360,8 @@ namespace PhoneLibrary
                             p1.address.houseNum = addressReader.GetString(1);
                             p1.address.street = addressReader.GetString(2);
                             p1.address.city = addressReader.GetString(3);
-                            p1.address.State = (State)Enum.Parse(typeof(State), addressReader.GetString(4));
-                            p1.address.Country = (Country)Enum.Parse(typeof(Country), addressReader.GetString(5));
+                            p1.address.State = addressReader.GetString(4);
+                            p1.address.Country = addressReader.GetString(5);
                             p1.address.zipcode = addressReader.GetString(6);
                         }
                         catch (Exception e) { logger.Error($"Could not read address from DB. Error: {e.Message}"); }
@@ -385,13 +404,24 @@ namespace PhoneLibrary
             {
                 con = new SqlConnection(conStr);
                 con.Open();
-                string insertaddress = "INSERT INTO P_Address values(@id, @housenum, @street,  @city, @state, @country, @zip)";
+                string insertaddress = "INSERT INTO PAddress values(@id,@pid, @housenum, @street,  @city, @state, @country, @zip)";
                 string insertphone = "INSERT INTO Person values(@id, @firstname, @lastname, @phone, @address)";
                 string insertperson = "INSERT INTO Person values(@id, @firstname, @lastname, @phone, @address)";
 
-               
+               //ADD Phone#
+                myCommand = new SqlCommand($"INSERT INTO  Phone(Phone_ID,CountryCode, AreaCode, Number, Ext) " +
+                                           $"Values ({p.phone.PID},{p.phone.countryCode},'{p.phone.areaCode}','{p.phone.number}','{p.phone.ext}')", con);
+                myCommand.ExecuteNonQuery();
+
+                //ADD Person
+                myCommand = new SqlCommand($"INSERT INTO  Person(Person_ID, FirstName, LastName, Gender, Ph_ID) " +
+                                           $"Values ({p.Pid},'{p.FirstName}','{p.LastName}','{p.Gender}',{p.phone.PID})", con);
+                myCommand.ExecuteNonQuery();
+
+                //ADD Address
                 myCommand = new SqlCommand(insertaddress, con);
                 myCommand.Parameters.AddWithValue("@id", p.address.Aid);
+                myCommand.Parameters.AddWithValue("@pid", p.Pid);
                 myCommand.Parameters.AddWithValue("@street", p.address.street);
                 myCommand.Parameters.AddWithValue("@housenum", p.address.houseNum);
                 myCommand.Parameters.AddWithValue("@city", p.address.city);
@@ -400,15 +430,19 @@ namespace PhoneLibrary
                 myCommand.Parameters.AddWithValue("@country", p.address.Country.ToString());
                 myCommand.ExecuteNonQuery();
 
-
-
-                myCommand = new SqlCommand($"INSERT INTO  Phone(Phone_ID,CountryCode, AreaCode, Number, Ext) " +
-                                           $"Values ({p.phone.PID},{p.phone.countryCode},'{p.phone.areaCode}','{p.phone.number}','{p.phone.ext}')", con);
-                myCommand.ExecuteNonQuery();
-
-                myCommand = new SqlCommand($"INSERT INTO  Person(Person_ID, FirstName, LastName, Addr_ID, Ph_ID) " +
-                                           $"Values ({p.Pid},'{p.FirstName}','{p.LastName}',{p.address.Aid},{p.phone.PID})", con);
-                myCommand.ExecuteNonQuery();
+                if(p.address2.houseNum != null)
+                {
+                    //ADD Address
+                    myCommand = new SqlCommand(insertaddress, con);
+                    myCommand.Parameters.AddWithValue("@id", p.address2.Aid);
+                    myCommand.Parameters.AddWithValue("@pid", p.Pid);
+                    myCommand.Parameters.AddWithValue("@street", p.address2.street);
+                    myCommand.Parameters.AddWithValue("@housenum", p.address2.houseNum);
+                    myCommand.Parameters.AddWithValue("@city", p.address2.city);
+                    myCommand.Parameters.AddWithValue("@zip", p.address2.zipcode);
+                    myCommand.Parameters.AddWithValue("@state", p.address2.State.ToString());
+                    myCommand.Parameters.AddWithValue("@country", p.address2.Country.ToString());
+                }
             }
             catch (SqlException ex) { Console.WriteLine(ex.Message); }
             catch (Exception ex) { Console.WriteLine(ex.Message); }
@@ -497,11 +531,16 @@ namespace PhoneLibrary
             {
                 con = new SqlConnection(conStr);
                 con.Open();
-
-                myCommand = new SqlCommand($"DELETE FROM  Person WHERE (Person_ID={p.Pid} )", con);
+                myCommand = new SqlCommand($"DELETE FROM  PAddress WHERE (Address_ID={p.address.Aid} )", con);
                 myCommand.ExecuteNonQuery();
 
-                myCommand = new SqlCommand($"DELETE FROM  P_Address WHERE (Address_ID={p.address.Aid} )", con);
+                if(p.address2.houseNum != null)
+                {
+                    myCommand = new SqlCommand($"DELETE FROM  PAddress WHERE (Address_ID={p.address2.Aid} )", con);
+                    myCommand.ExecuteNonQuery();
+                }
+
+                myCommand = new SqlCommand($"DELETE FROM  Person WHERE (Person_ID={p.Pid} )", con);
                 myCommand.ExecuteNonQuery();
 
                 myCommand = new SqlCommand($"DELETE FROM  Phone WHERE (Phone_ID={p.phone.PID} )", con);
@@ -539,6 +578,10 @@ namespace PhoneLibrary
             }
 
         }
+
+
+
+       
 
     }//end class
 }

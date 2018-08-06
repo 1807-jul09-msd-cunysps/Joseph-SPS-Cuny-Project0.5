@@ -12,3 +12,13 @@ The multi-part identifier "p.Ph_ID" could not be bound.
    at System.Data.SqlClient.SqlDataReader.GetString(Int32 i)
    at PhoneLibrary.Operations.Read() in D:\squir\Revature_repo\PhoneDirectoryApp\PhoneLibrary\PersonDirectory.cs:line 50
 2018-08-01 23:25:03.9453 ERROR Object reference not set to an instance of an object.    at PhoneLibrary.Operations.Read() in D:\squir\Revature_repo\PhoneDirectoryApp\PhoneLibrary\PersonDirectory.cs:line 62
+2018-08-04 13:52:20.8596 ERROR Invalid object name 'P_Address'.
+2018-08-04 13:52:24.1683 ERROR Invalid object name 'P_Address'.
+2018-08-04 14:25:15.0348 ERROR Invalid column name 'PerIDINNER'.
+2018-08-04 14:25:18.4641 ERROR Invalid column name 'PerIDINNER'.
+2018-08-04 14:39:44.3314 ERROR Unable to cast object of type 'System.Int32' to type 'System.String'.    at System.Data.SqlClient.SqlBuffer.get_String()
+   at System.Data.SqlClient.SqlDataReader.GetString(Int32 i)
+   at PhoneLibrary.Operations.SQLStart() in D:\squir\Revature_repo\PhoneDirectoryApp\PhoneLibrary\PersonDirectory.cs:line 303
+2018-08-04 14:39:46.0575 ERROR Unable to cast object of type 'System.Int32' to type 'System.String'.    at System.Data.SqlClient.SqlBuffer.get_String()
+   at System.Data.SqlClient.SqlDataReader.GetString(Int32 i)
+   at PhoneLibrary.Operations.Read() in D:\squir\Revature_repo\PhoneDirectoryApp\PhoneLibrary\PersonDirectory.cs:line 48

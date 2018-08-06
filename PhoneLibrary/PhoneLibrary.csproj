@@ -70,6 +70,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EmailOps.cs" />
     <Compile Include="PersonDirectoryCont.cs" />
     <Compile Include="PersonDirectory.cs" />
     <Compile Include="Person.cs" />

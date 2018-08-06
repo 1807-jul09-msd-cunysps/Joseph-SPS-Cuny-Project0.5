@@ -170,7 +170,10 @@ namespace PhoneLibrary
                 L = p.LastName;
             }
             #endregion
-                
+            Console.Write("Gender:");
+            p.Gender = Console.ReadLine();
+            
+
         }
 
         //part of add , just for a persons address
@@ -191,35 +194,35 @@ namespace PhoneLibrary
             switch (input)
             {
                 case "ny":
-                    p.address.State = State.NY;
+                    p.address.State = State.NY.ToString();
                     break;
                 case "fl":
-                    p.address.State = State.FL;
+                    p.address.State = State.FL.ToString();
                     break;
                 case "va":
-                    p.address.State = State.VA;
+                    p.address.State = State.VA.ToString();
                     break;
                 case "md":
-                    p.address.State = State.MD;
+                    p.address.State = State.MD.ToString();
                     break;
                 case "ma":
-                    p.address.State = State.MA;
+                    p.address.State = State.MA.ToString();
                     break;
                 case "tx":
-                    p.address.State = State.TX;
+                    p.address.State = State.TX.ToString();
                     break;
                 case "ca":
-                    p.address.State = State.CA;
+                    p.address.State = State.CA.ToString();
                     break;
                 case "oh":
-                    p.address.State = State.OH;
+                    p.address.State = State.OH.ToString();
                     break;
                 case "other":
                 case "ot":
-                    p.address.State = State.OT;
+                    p.address.State = State.OT.ToString();
                     break;
                 default:
-                    p.address.State = State.OT;
+                    p.address.State = State.OT.ToString();
                     break;
             }
             #endregion
@@ -229,33 +232,33 @@ namespace PhoneLibrary
             switch (input)
             {
                 case "us":
-                    p.address.Country = Country.US;
+                    p.address.Country = Country.US.ToString();
                     int x = (int)Country.US;
                     p.phone.countryCode = x.ToString();
                     break;
                 case "uk":
-                    p.address.Country = Country.UK;
+                    p.address.Country = Country.UK.ToString();
                      x = (int)Country.UK;
                     p.phone.countryCode = x.ToString();
                     break;
                 case "india":
-                    p.address.Country = Country.India;
+                    p.address.Country = Country.India.ToString();
                      x = (int)Country.India;
                     p.phone.countryCode = x.ToString();
                     break;
                 case "pakistan":
-                    p.address.Country = Country.Pakistan;
+                    p.address.Country = Country.Pakistan.ToString();
                     x = (int)Country.Pakistan;
                     p.phone.countryCode = x.ToString();
                     break;
                 case "australia":
-                    p.address.Country = Country.Australia;
+                    p.address.Country = Country.Australia.ToString();
                     x = (int)Country.Australia;
                     p.phone.countryCode = x.ToString();
                     break;
                 case "other":
                 default:
-                    p.address.Country = Country.Other;
+                    p.address.Country = Country.Other.ToString();
                     x = (int)Country.Other;
                     p.phone.countryCode = x.ToString();
                     break;
